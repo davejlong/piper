@@ -1,43 +1,43 @@
 defmodule Piper.Permissions.Parser.Tracker do
 
   def new() do
-    Agent.start_link(fn -> %{perms: HashSet.new(),
-                             args: HashSet.new(),
-                             options: HashSet.new()} end)
+    Agent.start_link(fn -> %{perms: MapSet.new(),
+                             args: MapSet.new(),
+                             options: MapSet.new()} end)
   end
 
   def add_permission(tracker, permission) do
     Agent.update(tracker, fn(state) ->
-      if Set.member?(state.perms, permission) do
+      if MapSet.member?(state.perms, permission) do
         state
       else
-        %{state | perms: Set.put(state.perms, permission)}
+        %{state | perms: MapSet.put(state.perms, permission)}
       end
     end)
   end
 
   def add_option(tracker, name) do
     Agent.update(tracker, fn(state) ->
-      if Set.member?(state.perms, name) do
+      if MapSet.member?(state.perms, name) do
         state
       else
-        %{state | options: Set.put(state.options, name)}
+        %{state | options: MapSet.put(state.options, name)}
       end
     end)
   end
 
   def add_arg(tracker, index) do
     Agent.update(tracker, fn(state) ->
-      if Set.member?(state.args, index) do
+      if MapSet.member?(state.args, index) do
         state
       else
-        %{state | args: Set.put(state.args, index)}
+        %{state | args: MapSet.put(state.args, index)}
       end
     end)
   end
 
   def list_permissions(tracker) do
-    Agent.get(tracker, fn(state) -> Enum.sort(Set.to_list(state.perms)) end)
+    Agent.get(tracker, fn(state) -> Enum.sort(MapSet.to_list(state.perms)) end)
   end
 
   def get_score(tracker) do
@@ -51,7 +51,7 @@ defmodule Piper.Permissions.Parser.Tracker do
   end
 
   defp compute_score(values) do
-    score = Set.size(values)
+    score = MapSet.size(values)
     cond do
       :any in values ->
         (score  - 1) + 3

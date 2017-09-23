@@ -120,8 +120,8 @@ defmodule Piper.Permissions.ParserTest do
   end
 
   test "random whitespacing parses" do
-    matches_normalized "when#{ws}command#{ws}is#{ws} s3:bucket must#{ws} have#{ws}all in [s3:read]", ["s3:read"]
-    matches_normalized "when#{ws}command#{ws}is#{ws} s3:bucket must#{ws} have#{ws}all in [s3:read]", ["s3:read"]
+    matches_normalized "when#{ws()}command#{ws()}is#{ws()} s3:bucket must#{ws()} have#{ws()}all in [s3:read]", ["s3:read"]
+    matches_normalized "when#{ws()}command#{ws()}is#{ws()} s3:bucket must#{ws()} have#{ws()}all in [s3:read]", ["s3:read"]
   end
 
   test "complicated rule round trips correctly" do

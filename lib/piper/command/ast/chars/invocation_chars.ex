@@ -26,8 +26,8 @@ defimpl String.Chars, for: Piper.Command.Ast.PipelineStage do
     "#{left}"
   end
   def to_string(%Ast.PipelineStage{type: type, left: left, right: right}) do
-    left = String.strip("#{left}")
-    right = String.strip("#{right}")
+    left = String.trim("#{left}")
+    right = String.trim("#{right}")
     left <> " #{symbol_for_type(type)} " <> right
   end
 

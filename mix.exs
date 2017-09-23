@@ -4,7 +4,7 @@ defmodule Piper.Mixfile do
   def project do
     [app: :piper,
      version: "1.1.0",
-     elixir: "~> 1.3.1",
+     elixir: "~> 1.5.1",
      erlc_options: [:debug_info] ++ warnings_as_errors(:erl),
      leex_options: warnings_as_errors(:erl),
      elixirc_options: warnings_as_errors(:ex),
@@ -14,7 +14,7 @@ defmodule Piper.Mixfile do
      preferred_cli_env: ["coveralls": :test,
                          "coveralls.html": :test,
                          "coveralls.travis": :test],
-     deps: deps] ++ compile_protocols(Mix.env)
+     deps: deps()] ++ compile_protocols(Mix.env)
   end
 
   def application do
@@ -25,9 +25,9 @@ defmodule Piper.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
-    [{:poison, "~> 2.0"},
+    [{:poison, "~> 3.1"},
      {:uuid, "~> 1.1.5"},
-     {:excoveralls, "~> 0.6", only: :test}]
+     {:excoveralls, "~> 0.7.3", only: :test}]
   end
 
   defp compile_protocols(:prod), do: [build_embedded: true]
